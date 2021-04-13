@@ -1,5 +1,6 @@
 <?php
 include "connect.php";
+$today = DATE("d-m-Y"); echo "<br> today date ".$today;
 $sql = "SELECT * FROM nse order by id desc limit 1";
 $result = $connection->query($sql);
 if ($result->num_rows > 0) {
@@ -18,7 +19,7 @@ echo "<br> tm date ".$tm;
 } else {  echo "0 results"; $tm = DATE("d-m-Y"); echo "<br> tm date ".$tm; 
 } 
 echo "<br>------------------------------------------------------------- ";
-
+if($today == $lastdate){ echo $today ."Data found in database";} else {
 //$date = date("dmY");
 //echo " date ".$date;
 $url0 = 'https://archives.nseindia.com/products/content/sec_bhavdata_full_';
@@ -126,5 +127,5 @@ $m = $the_big_array[$key][13];
 $n = $the_big_array[$key][14];
 //echo "a" .$a . $b;
 $query = mysqli_query($connection,"INSERT INTO nse(symbol,series,open,high,low,close,date,timestamp) VALUES ('$symbol','$a','$d','$e','$f','$g','$b','$tm')");
-}  ?>
-<?php if($d < "1") { $query = mysqli_query($connection,"INSERT INTO nse(timestamp) VALUES ('$tm')");}
+} 
+if($d < "1") { $query = mysqli_query($connection,"INSERT INTO nse(timestamp) VALUES ('$tm')");}}
