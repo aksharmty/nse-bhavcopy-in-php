@@ -1,7 +1,7 @@
 <?php
 include "connect.php";
-$today = DATE("d-m-Y"); echo "<br> today date ".$today;
-$sql = "SELECT * FROM nse order by id desc limit 1";
+$today = DATE("Y-m-d"); echo "<br> today date ".$today;
+$sql = "SELECT * FROM nse order by timestamp desc limit 1";
 $result = $connection->query($sql);
 if ($result->num_rows > 0) {
   // output data of each row
@@ -12,14 +12,14 @@ $time = $timestamp + (24*60*60);
 // Date and time after subtraction
 $date = date("dmY", $time);
 echo "<br> new date ".$date;
-$tm = date("d-m-Y", $time);
+$tm = date("Y-m-d", $time);
 echo "<br> tm date ".$tm;
 
 }
-} else {  echo "0 results"; $tm = DATE("d-m-Y"); echo "<br> tm date ".$tm; 
+} else {  echo "0 results"; $tm = DATE("Y-m-d"); echo "<br> tm date ".$tm; 
 } 
 echo "<br>------------------------------------------------------------- ";
-if($today == $lastdate){ echo $today ."Data found in database";} else {
+if($today <= $lastdate){ echo $today ."Data found in database";} else {
 //$date = date("dmY");
 //echo " date ".$date;
 $url0 = 'https://archives.nseindia.com/products/content/sec_bhavdata_full_';
@@ -128,4 +128,11 @@ $n = $the_big_array[$key][14];
 //echo "a" .$a . $b;
 $query = mysqli_query($connection,"INSERT INTO nse(symbol,series,open,high,low,close,date,timestamp) VALUES ('$symbol','$a','$d','$e','$f','$g','$b','$tm')");
 } 
-if($d < "1") { $query = mysqli_query($connection,"INSERT INTO nse(timestamp) VALUES ('$tm')");}}
+if($d < "1") { $query = mysqli_query($connection,"INSERT INTO nse(timestamp) VALUES ('$tm')");}}?>
+<?php
+$count = mysqli_fetch_array(mysqli_query($connection,"SELECT count(symbol) as tm500 FROM `nse` where symbol='symbol'"));
+$tm5 = $count['tm500']; echo "<br> 50 count ".$tm5;
+
+if($tm50 >= "51"){ $sql50 = mysqli_fetch_array(mysqli_query($connection,"SELECT * FROM nse order by timestamp asc limit 1"));
+$tm50 = $sql50['timestamp']; echo "<br> 50 old date ".$tm50;
+$del0 = mysqli_query($connection,"DELETE FROM `nse` WHERE timestamp='$tm50'"); }
