@@ -8,7 +8,7 @@ date_default_timezone_set(TIMEZONE);
 $coinsql = mysqli_fetch_array(mysqli_query($connection,"SELECT * FROM sma where hma ='0'"));  
 $coin = $coinsql['name']; $day = $coinsql['day'];
 echo "coin : ",$coin; 
-$sql123 = mysqli_query($connection,"TRUNCATE TABLE candle1");
+$sql123 = mysqli_query($connection,"TRUNCATE TABLE candle");
 
 $sql = "SELECT * FROM nse where symbol = '$coin' AND series =' EQ' order by timestamp desc limit 50";
 $result = $connection->query($sql);
@@ -18,7 +18,7 @@ if ($result->num_rows > 0) {
   while($row = $result->fetch_assoc()) {
 $symbol=$row["symbol"]; $open=$row["open"]; $close=$row["close"]; $high=$row["high"]; $low=$row["low"]; $timestamp=$row["timestamp"];
  //   echo " symbol " .$symbol . " open ". $open . " close ". $close . " high  " .$high . " low " . $low . " timestamp ". $timestamp. "<br>";
-$sql0 = mysqli_query($connection,"INSERT INTO candle1 (name,open,close,high,low,date) values ('$symbol','$open','$close','$high','$low','$timestamp')");
+$sql0 = mysqli_query($connection,"INSERT INTO candle (name,open,close,high,low,date) values ('$symbol','$open','$close','$high','$low','$timestamp')");
 }
 } else {
   echo "0 results";
@@ -26,14 +26,14 @@ $sql0 = mysqli_query($connection,"INSERT INTO candle1 (name,open,close,high,low,
 
 
 //ma
-$ma900 = mysqli_fetch_assoc(mysqli_query($connection, "select avg(close) as ma901 from candle1 where id between 1 and 9"));
+$ma900 = mysqli_fetch_assoc(mysqli_query($connection, "select avg(close) as ma901 from candle where id between 1 and 9"));
 $ma9 =number_format($ma900['ma901'],2,".",""); echo "<br> Ma9 ".$ma9;
-$ma200 = mysqli_fetch_assoc(mysqli_query($connection, "select avg(close) as ma201 from candle1 where id between 1 and 20"));
+$ma200 = mysqli_fetch_assoc(mysqli_query($connection, "select avg(close) as ma201 from candle where id between 1 and 20"));
 $ma20 =number_format($ma200['ma201'],2,".",""); echo "<br> Ma20 ".$ma20;
-$ma500 = mysqli_fetch_assoc(mysqli_query($connection, "select avg(close) as ma501 from candle1 where id between 1 and 50"));
+$ma500 = mysqli_fetch_assoc(mysqli_query($connection, "select avg(close) as ma501 from candle where id between 1 and 50"));
 $ma50 =number_format($ma500['ma501'],2,".",""); echo "<br> Ma50 ".$ma50;
 
-$smaup = mysqli_fetch_assoc(mysqli_query($connection, "select * from candle1 order by id asc limit 1"));
+$smaup = mysqli_fetch_assoc(mysqli_query($connection, "select * from candle order by id asc limit 1"));
 $open0=$smaup["open"]; $close0=$smaup["close"]; $high0=$smaup["high"]; $low0=$smaup["low"]; $timestamp0=$smaup["date"];
 echo "<br>last open ". $open0 . " last close ". $close0 . " last high  " .$high0 . " last low " . $low0 . " last trade day ". $timestamp0. "<br>";
 if($ma20 > $ma50 && $close0 > $ma50){ $sig = "BUY"; $date0 = $date; echo " signal " .$sig;}
