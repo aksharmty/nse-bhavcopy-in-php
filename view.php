@@ -17,5 +17,3 @@ if ($result->num_rows > 0) {
 }
 $connection->close();
 ?>
-
-<!--<meta http-equiv="refresh" content="10; url=http://arbitrage.ishwariyajeevan.com/angel/3.php/" />  -->
