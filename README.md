@@ -6,7 +6,7 @@ Donwload all file and upload pubilc_html folder<br>
 Modify connect.php with your database details.<br>
 Import ishwakbi_bhavcopy.sql in database.<br>
 Run cron every 24 hours for bhavcopy.php<br>
-Run cron every 5 minutes for candle.php<br>
+Run cron every 5 minutes for moving-average.php<br>
 View signal.php for buy / sell signal.<br>
 
 <b>NOTE: Add your favorite stock name in sma table.<br>This script last tested on 17-04-2021.
